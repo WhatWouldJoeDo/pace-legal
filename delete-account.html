@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delete Account — Pace</title>
+<style>
+  :root {
+    --bg: #09090b;
+    --fg: #fafafa;
+    --muted: #a1a1aa;
+    --accent: #d9ff00;
+    --border: #27272a;
+    --danger: #ef4444;
+    --danger-border: rgba(239, 68, 68, 0.3);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 56px 24px 120px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; font-size: 20px; }
+  .logo .dot { width: 12px; height: 12px; background: var(--accent); }
+  h1 { font-size: 44px; line-height: 1; text-transform: uppercase; letter-spacing: -0.03em; margin: 40px 0 8px; }
+  h1 span { color: var(--accent); }
+  .meta { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+  h2 {
+    margin: 48px 0 12px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  h2 span { color: var(--accent); }
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 14px; padding-left: 20px; }
+  li { margin-bottom: 8px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  strong { color: #ffffff; }
+  .footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+
+  label { display: block; font-size: 13px; color: var(--muted); margin: 16px 0 6px; }
+  input {
+    width: 100%;
+    padding: 10px 12px;
+    background: transparent;
+    color: var(--fg);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    font: inherit;
+  }
+  input:focus { outline: none; border-color: var(--fg); }
+  button {
+    font: inherit;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    padding: 12px 16px;
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg);
+  }
+  button:hover { border-color: var(--fg); }
+  button:disabled { opacity: 0.45; cursor: not-allowed; }
+  .primary { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 700; }
+  .primary:hover { border-color: var(--accent); filter: brightness(0.92); }
+  .danger { border-color: var(--danger-border); color: var(--danger); }
+  .danger:hover { border-color: var(--danger); }
+  .danger.active { background: var(--danger); border-color: var(--danger); color: #ffffff; }
+  .recover { text-align: right; font-size: 13px; margin-top: 8px; color: var(--muted); }
+  .msg { margin-top: 16px; font-size: 14px; }
+  .msg.error { color: var(--danger); }
+  .msg.ok { color: var(--accent); }
+  .hint { font-size: 13px; color: var(--muted); margin-top: 8px; }
+  .hidden { display: none; }
+  .danger-note { border: 1px solid var(--danger-border); padding: 14px 16px; margin: 20px 0 16px; }
+  .danger-note p { margin: 0 0 8px; }
+  .danger-note p:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo"><span class="dot"></span>Pace</div>
+
+  <h1>Delete <span>Account</span></h1>
+  <p class="meta">Permanent deletion of your account and all associated data</p>
+
+  <p>
+    Use this page to permanently delete your Pace account and all data associated with it. This
+    includes your profile, photos, swipes, matches, messages, location data and premium
+    entitlements. Deletion is <strong>immediate and permanent</strong> — it cannot be undone.
+  </p>
+  <p>
+    If you have a paid Pace subscription, you must cancel it in your app store's subscription
+    settings first — deleting your account does not stop store billing.
+  </p>
+
+  <h2><span>/</span> 1. Sign in</h2>
+  <p>Sign in with the email and password of your Pace account.</p>
+
+  <form id="login-form">
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" autocomplete="email" required>
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" autocomplete="current-password" required>
+    <div class="recover"><a href="#" id="forgot-link">Forgot password?</a></div>
+    <button type="submit" class="primary" id="login-btn">Sign in</button>
+    <div class="hint">Signing in does not delete anything. You will confirm the deletion in the next step.</div>
+  </form>
+  <div class="msg hidden" id="login-msg" role="alert"></div>
+
+  <h2><span>/</span> 2. Confirm deletion</h2>
+  <div class="hidden" id="delete-panel">
+    <p class="hint" id="signed-in-as">Signed in.</p>
+    <div class="danger-note">
+      <p><strong>Warning:</strong> this is permanent. Your profile, photos, swipes, matches and messages are deleted immediately and can't be recovered.</p>
+      <p>If you have a paid Pace subscription, cancel it in your app store's subscription settings first — deleting your account does not stop store billing.</p>
+    </div>
+    <label for="confirm">Type <strong>DELETE</strong> to confirm</label>
+    <input id="confirm" name="confirm" type="text" autocomplete="off" placeholder="DELETE">
+    <button type="button" class="danger" id="delete-btn" disabled>Delete account</button>
+    <div class="msg hidden" id="delete-msg" role="alert"></div>
+  </div>
+
+  <p>
+    <a href="https://whatwouldjoedo.github.io/pace-legal/privacy.html">Privacy Policy</a> ·
+    <a href="mailto:ramppjohannes@gmail.com">Contact</a>
+  </p>
+
+  <div class="footer">
+    Pace — find your training partner. Train together, explore together, get better together.
+  </div>
+</div>
+
+<script>
+(function () {
+  const SUPABASE_URL = "https://exlcrsifebjjawzcdutk.supabase.co";
+  const PUBLISHABLE_KEY = "sb_publishable_FXtPs7W2HFgapJc12pGzIA_bnyYmZ_W";
+
+  const loginForm = document.getElementById("login-form");
+  const loginBtn = document.getElementById("login-btn");
+  const loginMsg = document.getElementById("login-msg");
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+  const forgotLink = document.getElementById("forgot-link");
+  const deletePanel = document.getElementById("delete-panel");
+  const signedInAs = document.getElementById("signed-in-as");
+  const confirm = document.getElementById("confirm");
+  const deleteBtn = document.getElementById("delete-btn");
+  const deleteMsg = document.getElementById("delete-msg");
+
+  let accessToken = null;
+
+  function show(el, ok) {
+    el.classList.remove("hidden");
+    el.classList.toggle("ok", ok === true);
+    el.classList.toggle("error", ok === false);
+  }
+
+  function hide(el) {
+    el.classList.add("hidden");
+  }
+
+  async function postJson(url, body, headers) {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: Object.assign(
+        { "Content-Type": "application/json", apikey: PUBLISHABLE_KEY },
+        headers || {}
+      ),
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    let data = null;
+    try { data = await res.json(); } catch (_) { /* non-JSON */ }
+    return { status: res.status, data };
+  }
+
+  function setBusy(btn, busy, label) {
+    btn.disabled = busy;
+    btn.textContent = busy ? "…" : label;
+  }
+
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    hide(loginMsg);
+    setBusy(loginBtn, true, "Signing in…");
+
+    try {
+      const { status, data } = await postJson(
+        SUPABASE_URL + "/auth/v1/token?grant_type=password",
+        { email: email.value.trim(), password: password.value }
+      );
+      if (status !== 200 || !data.access_token) {
+        show(loginMsg, false);
+        loginMsg.textContent = "Sign-in failed. Check your email and password.";
+        return;
+      }
+      accessToken = data.access_token;
+      signedInAs.textContent = "Signed in as " + email.value.trim() + ".";
+      hide(loginMsg);
+      loginForm.classList.add("hidden");
+      deletePanel.classList.remove("hidden");
+      email.disabled = true;
+      password.value = "";
+    } catch (err) {
+      show(loginMsg, false);
+      loginMsg.textContent = "Something went wrong. Please try again.";
+    } finally {
+      setBusy(loginBtn, false, "Sign in");
+    }
+  });
+
+  forgotLink.addEventListener("click", async (e) => {
+    e.preventDefault();
+    hide(loginMsg);
+    const addr = email.value.trim();
+    if (!addr) {
+      show(loginMsg, false);
+      loginMsg.textContent = "Enter your email address first.";
+      return;
+    }
+    try {
+      await postJson(
+        SUPABASE_URL + "/auth/v1/recover",
+        { email: addr }
+      );
+      show(loginMsg, true);
+      loginMsg.textContent = "If an account exists for " + addr + ", a password reset link is on its way. Follow it in the app.";
+    } catch (_) {
+      show(loginMsg, false);
+      loginMsg.textContent = "Something went wrong. Please try again.";
+    }
+  });
+
+  confirm.addEventListener("input", () => {
+    deleteBtn.disabled = confirm.value.trim() !== "DELETE";
+  });
+
+  deleteBtn.addEventListener("click", async () => {
+    if (confirm.value.trim() !== "DELETE" || !accessToken) return;
+    hide(deleteMsg);
+    setBusy(deleteBtn, true, "Deleting…");
+
+    try {
+      const { status, data } = await postJson(
+        SUPABASE_URL + "/functions/v1/delete-account",
+        null,
+        { Authorization: "Bearer " + accessToken }
+      );
+      if (data && data.ok === true) {
+        deleteBtn.disabled = true;
+        confirm.disabled = true;
+        show(deleteMsg, true);
+        deleteMsg.textContent = "Your account and all associated data have been deleted.";
+        return;
+      }
+      const message = data && data.message ? data.message : "";
+      if (data && data.ok === false && /not found|already/i.test(message)) {
+        show(deleteMsg, true);
+        deleteMsg.textContent = "This account appears to have been deleted already, or was not found.";
+        return;
+      }
+      show(deleteMsg, false);
+      deleteMsg.textContent = "Deletion failed: " + (message || "unknown error") + ". Please try again.";
+    } catch (err) {
+      show(deleteMsg, false);
+      deleteMsg.textContent = "Could not reach the deletion service. Check your connection and try again.";
+    } finally {
+      setBusy(deleteBtn, false, "Delete account");
+    }
+  });
+})();
+</script>
+</body>
+</html>
