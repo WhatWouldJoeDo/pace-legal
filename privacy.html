@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy Policy — Pace</title>
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
 <style>
   :root {
     --bg: #09090b;
@@ -22,9 +24,13 @@
     -webkit-font-smoothing: antialiased;
   }
   .wrap { max-width: 640px; margin: 0 auto; padding: 56px 24px 120px; }
-  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; font-size: 20px; }
+  .legal-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .logo { display: flex; align-items: center; gap: 8px; color: var(--fg); font-family: Anton, Impact, sans-serif; font-weight: 400; text-transform: uppercase; text-decoration: none; letter-spacing: -0.02em; font-size: 24px; }
+  .logo:hover { text-decoration: none; }
   .logo .dot { width: 12px; height: 12px; background: var(--accent); }
-  h1 { font-size: 44px; line-height: 1; text-transform: uppercase; letter-spacing: -0.03em; margin: 40px 0 8px; }
+  .home-link { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  .home-link:hover { color: var(--accent); text-decoration: none; }
+  h1 { font-family: Anton, Impact, sans-serif; font-size: 52px; font-weight: 400; line-height: 1; text-transform: uppercase; letter-spacing: -0.03em; margin: 40px 0 8px; }
   h1 span { color: var(--accent); }
   .meta { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
   h2 {
@@ -44,14 +50,18 @@
   a:hover { text-decoration: underline; }
   strong { color: #ffffff; }
   .footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+  .footer-nav { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 14px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="logo"><span class="dot"></span>Pace</div>
+  <header class="legal-header">
+    <a class="logo" href="index.html" aria-label="Pace home"><span class="dot"></span>Pace</a>
+    <a class="home-link" href="index.html">← Back to Pace</a>
+  </header>
 
   <h1>Privacy <span>Policy</span></h1>
-  <p class="meta">Last updated: 17 August 2026</p>
+  <p class="meta">Last updated: 29 August 2026</p>
 
   <p>
     Pace is operated by <strong>Johannes Rampp</strong>, contact:
@@ -67,7 +77,7 @@
   <ul>
     <li><strong>Account data</strong> — your email address and a password (passwords are stored only in hashed form by our authentication provider).</li>
     <li><strong>Profile data</strong> — display name, age, gender, bio, photos, city, chosen sports and levels, and answers to profile prompts.</li>
-    <li><strong>Location data</strong> — precise GPS coordinates or the city/postal code you pick. Coordinates are stored in a private, protected table and are never shown to other users; other users only see a computed distance.</li>
+    <li><strong>Location data</strong> — precise GPS coordinates or the city/postal code you pick. Coordinates are stored in a private, protected table and are never shown to other users; other users only see a coarse approximate distance calculated from a privacy-protected location.</li>
     <li><strong>Activity data</strong> — your swipes, matches, and chat messages with matched athletes.</li>
     <li><strong>Purchase data</strong> — which premium tier you purchased and the store transaction identifiers (product and transaction ID), validated against the Apple App Store or Google Play.</li>
   </ul>
@@ -104,7 +114,7 @@
     Your data is kept for as long as your account exists. You can delete your account at any time
     in the app (<strong>Profile → Edit profile → Danger zone → Delete account</strong>) or from your
     browser at
-    <a href="https://whatwouldjoedo.github.io/pace-legal/delete-account.html">delete your account</a>.
+    <a href="delete-account.html">delete your account</a>.
     Deletion is immediate and permanent: profile, photos, swipes, matches, messages, location and
     premium entitlements are removed.
   </p>
@@ -153,6 +163,11 @@
 
   <div class="footer">
     Pace — find your training partner. Train together, explore together, get better together.
+    <nav class="footer-nav" aria-label="Legal pages">
+      <a href="index.html">Home</a>
+      <a href="terms.html">Terms</a>
+      <a href="delete-account.html">Delete account</a>
+    </nav>
   </div>
 </div>
 </body>
